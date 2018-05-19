@@ -1,0 +1,100 @@
+spring:
+  cloud:
+      stream:
+        kafka:
+            binder:
+              brokers: 127.0.0.1:9092
+              zkNodes: 127.0.0.1:2181
+        bindings:
+          input:
+            destination: eureka-instance
+        default-binder: kafka
+      bus:
+        enabled: true
+  sleuth:
+    integration:
+      enabled: false
+    scheduled:
+      enabled: false
+    sampler:
+      percentage: 1.0
+    stream:
+      enabled: true
+  http:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+eureka:
+  instance:
+    preferIpAddress: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+    metadata-map:
+      VERSION: v1
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+    registryFetchIntervalSeconds: 10
+    disable-delta: true
+zuul:
+  addHostHeader: true
+  routes:
+    event:
+      path: /event/**
+      serviceId: event-store-service
+      helperService: gateway-helper
+    devops:
+      path: /devops/**
+      serviceId: devops-service
+    iam:
+      path: /iam/**
+      serviceId: iam-service
+    oauth:
+      path: /oauth/**
+      sensitiveHeaders:
+      serviceId: oauth-server
+      stripPrefix: false
+    notify:
+      path: /notify/**
+      serviceId: notification-service
+    manager:
+      path: /manager/**
+      serviceId: manager-service
+    file:
+      path: /file/**
+      serviceId: file-service
+    org:
+      path: /org/**
+      serviceId: organization-service
+  semaphore:
+    max-semaphores: 300
+  sensitiveHeaders: Cookie,Set-Cookie
+hystrix:
+  stream:
+      queue:
+        enabled: true
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+choerodon:
+  gateway:
+    helper:
+      helper-skip-paths: /oauth/**, /manager/swagger-ui.html, /manager/swagger-resources/**, /manager/webjars/**, /manager/docs/**
+      service-id: gateway-helper
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+management:
+  port: 8081
+  security:
+    enabled: false
+security:
+  basic:
+    enabled: false

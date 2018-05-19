@@ -1,0 +1,18 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+      config:
+        failFast: true
+        uri: http://localhost:8010
+        enabled: false
+        retry:
+          maxAttempts: 6
+          multiplier: 1.1
+          maxInterval: 2000
+management:
+  port: 8081
+  security:
+    enabled: false
