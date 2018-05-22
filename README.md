@@ -8,7 +8,7 @@ The gateway service is responsible for routing requests to real services. Use `c
 
 ## Requirements
 - The project is a project about eureka client. The local operation needs to cooperate with `register-server`, and the online operation needs to cooperate with `go-register-server`.
-- It needs to cooperate with `gateway-helper` to complete the gateway functions such as authentication, traffic limiting, and routing.å
+- It needs to cooperate with `gateway-helper` to complete the gateway functions such as authentication, traffic limiting, and routing.
 
 ## Installation and Getting Started
 - Start `register-server`
