@@ -7,11 +7,11 @@ The gateway service is responsible for routing requests to real services. Use `c
 - In the future, spring cloud zuul may be deprecated and `linkerd` or other gateway services may be used.
 
 ## Requirements
-- The service is an eureka client service. The local operation needs to cooperate with `register-server`, and the online operation needs to cooperate with `go-register-server`.
+- The service is an eureka client service. The local operation needs to cooperate with `eureka-server`, and the online operation needs to cooperate with `go-register-server`.
 - It needs to cooperate with `gateway-helper` to complete the gateway functions such as authentication, traffic restrictions, and routing.
 
 ## Installation and Getting Started
-- Start `register-server`
+- Start `eureka-server`
 - Go to the project directory， run `mvn spring-boot:run`
 
 ## Dependencies
