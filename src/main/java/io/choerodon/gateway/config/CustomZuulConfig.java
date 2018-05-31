@@ -61,7 +61,7 @@ public class CustomZuulConfig {
     /**
      * 声明GateWayHelperFilter
      *
-     * @param ribbonCommandFactory       ribbon创建工厂，GateWayHelperFilter使用ribbon转发请求
+     * @param ribbonCommandFactory ribbon创建工厂，GateWayHelperFilter使用ribbon转发请求
      * @return 配置的GateWayHelperFilter
      */
     @Bean
@@ -115,6 +115,6 @@ public class CustomZuulConfig {
 
     @Bean
     public HeaderWrapperFilter headerWrapperFilter() {
-        return new HeaderWrapperFilter();
+        return new HeaderWrapperFilter(gatewayHelperProperties);
     }
 }
