@@ -84,6 +84,8 @@ choerodon:
     helper:
       helper-skip-paths: /oauth/**, /manager/swagger-ui.html, /manager/swagger-resources/**, /manager/webjars/**, /manager/docs/**
       service-id: gateway-helper
+      enabled: true
+      enabled-jwt-log: false
 ribbon:
   ReadTimeout: 20000
   ConnectTimeout: 20000
