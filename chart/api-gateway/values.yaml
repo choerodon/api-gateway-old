@@ -42,10 +42,10 @@ ingress:
 
 metrics:
   path: /prometheus
-  group: java-spring
+  group: spring-boot
 
 logs:
-  parser: java-spring
+  parser: spring-boot
 
 resources: 
   # We usually recommend not to specify default resources and to leave this as a conscious
