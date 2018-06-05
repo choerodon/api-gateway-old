@@ -9,9 +9,9 @@ image:
   pullPolicy: Always
 
 preJob:
+  appname: api-gateway
   preConfig:
     configFile: application.yml
-    appname: api-gateway
     mysql:
       host: localhost
       port: 3306
