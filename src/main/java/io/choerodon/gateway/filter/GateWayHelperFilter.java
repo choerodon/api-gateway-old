@@ -30,9 +30,9 @@ import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.util.*;
 
-import static io.choerodon.core.variable.RequestVariableHolder.*;
+import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
+import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.REQUEST_URI_KEY;
-
 
 /**
  * 自定义的servlet filter
@@ -93,11 +93,7 @@ public class GateWayHelperFilter implements Filter {
             RibbonCommandContext commandContext = buildCommandContext(req);
             clientHttpResponse = forward(commandContext);
             if (clientHttpResponse.getStatusCode().is2xxSuccessful()) {
-                if (!StringUtils.isEmpty(clientHttpResponse.getHeaders().getFirst(HEADER_TOKEN))) {
-                    LOGGER.info("Get jwt from gatewayHelper, request uri {} method {}", req.getRequestURI(), req.getMethod());
-                }
                 request.setAttribute(HEADER_JWT, clientHttpResponse.getHeaders().getFirst(HEADER_TOKEN));
-                request.setAttribute(HEADER_LABEL, clientHttpResponse.getHeaders().getFirst(HEADER_LABEL));
                 chain.doFilter(request, res);
             } else {
                 setGatewayHelperFailureResponse(clientHttpResponse, res);
