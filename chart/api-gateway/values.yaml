@@ -9,7 +9,6 @@ image:
   pullPolicy: Always
 
 preJob:
-  appname: api-gateway
   preConfig:
     configFile: application.yml
     mysql:
