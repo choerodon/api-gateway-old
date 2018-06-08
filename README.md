@@ -19,6 +19,10 @@ The gateway service is responsible for routing requests to real services. Use `c
 - `config-server`：The configuration of service
 - `kafka`
 
+## Links
+
+* [Change Log](./CHANGELOG.zh-CN.md)
+
 ## Reporting Issues
 If you find any shortcomings or bugs, please describe them in the [issue](https://github.com/choerodon/choerodon/issues/new?template=issue_template.md).
 
