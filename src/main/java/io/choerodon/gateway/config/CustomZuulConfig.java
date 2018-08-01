@@ -21,6 +21,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
 import javax.servlet.Filter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -101,6 +102,11 @@ public class CustomZuulConfig {
         config.addAllowedHeader("*");
         config.setMaxAge(18000L);
         config.addAllowedMethod("*");
+        //添加response暴露的header
+        String[] responseHeader =
+                {"date", "content-encoding", "server", "etag", "vary",
+                        "content-type", "transfer-encoding", "connection", "x-application-context"};
+        config.setExposedHeaders(Arrays.asList(responseHeader));
         source.registerCorsConfiguration("/**", config);
 
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
