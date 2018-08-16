@@ -56,7 +56,10 @@ zuul:
       stripPrefix: false
     notify:
       path: /notify/**
-      serviceId: notification-service
+      serviceId: notify-service
+    asgard:
+      path: /asgard/**
+      serviceId: asgard-service
     manager:
       path: /manager/**
       serviceId: manager-service
