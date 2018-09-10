@@ -35,10 +35,6 @@ import io.choerodon.gateway.filter.HeaderWrapperFilter;
 @Configuration
 @EnableConfigurationProperties(GatewayHelperProperties.class)
 public class CustomZuulConfig {
-
-    @Autowired(required = false)
-    private List<RibbonRequestCustomizer> requestCustomizers = Collections.emptyList();
-
     @Bean
     public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
         return new MemoryRouteLocator(server.getServletPrefix(), zuulProperties);
@@ -59,7 +55,11 @@ public class CustomZuulConfig {
     @Bean
     public GateWayHelperFilter gateWayHelperFilter(
             RibbonCommandFactory<?> ribbonCommandFactory,
-            GatewayHelperProperties gatewayHelperProperties) {
+            GatewayHelperProperties gatewayHelperProperties,
+            List<RibbonRequestCustomizer> requestCustomizers) {
+        if (requestCustomizers == null) {
+            requestCustomizers = Collections.emptyList();
+        }
         return new GateWayHelperFilter(gatewayHelperProperties,
                 requestCustomizers,
                 ribbonCommandFactory);
