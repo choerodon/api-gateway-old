@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.servlet.Filter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -34,12 +35,26 @@ import io.choerodon.gateway.filter.HeaderWrapperFilter;
 @Configuration
 @EnableConfigurationProperties(GatewayHelperProperties.class)
 public class CustomZuulConfig {
+
+    @Autowired
+    private ZuulProperties zuulProperties;
+
+    @Autowired
+    private ServerProperties server;
+
+    @Autowired
+    private GatewayHelperProperties gatewayHelperProperties;
+
+    @SuppressWarnings("rawtypes")
+    @Autowired(required = false)
+    private List<RibbonRequestCustomizer> requestCustomizers = Collections.emptyList();
+
     @Bean
-    public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
-        return new MemoryRouteLocator(server.getServletPrefix(), zuulProperties);
+    public RouteLocator memoryRouterOperator() {
+        return new MemoryRouteLocator(this.server.getServletPrefix(), this.zuulProperties);
     }
 
-    @Bean(name = "hand-routerOperator")
+    @Bean(name = "handRouterOperator")
     public RouterOperator routerOperator(ApplicationEventPublisher publisher,
                                          RouteLocator routeLocator) {
         return new RouterOperator(publisher, routeLocator);
@@ -52,13 +67,7 @@ public class CustomZuulConfig {
      * @return 配置的GateWayHelperFilter
      */
     @Bean
-    public GateWayHelperFilter gateWayHelperFilter(
-            RibbonCommandFactory<?> ribbonCommandFactory,
-            GatewayHelperProperties gatewayHelperProperties,
-            List<RibbonRequestCustomizer> requestCustomizers) {
-        if (requestCustomizers == null) {
-            requestCustomizers = Collections.emptyList();
-        }
+    public GateWayHelperFilter gateWayHelperFilter(RibbonCommandFactory<?> ribbonCommandFactory) {
         return new GateWayHelperFilter(gatewayHelperProperties,
                 requestCustomizers,
                 ribbonCommandFactory);
@@ -112,7 +121,7 @@ public class CustomZuulConfig {
     }
 
     @Bean
-    public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
+    public HeaderWrapperFilter headerWrapperFilter() {
         return new HeaderWrapperFilter(gatewayHelperProperties);
     }
 }
