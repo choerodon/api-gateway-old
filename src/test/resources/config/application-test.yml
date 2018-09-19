@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    bus:
+      enabled: false
+  sleuth:
+    stream:
+      enabled: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+hystrix:
+  stream:
+    queue:
+      enabled: false
+eureka:
+  client:
+    enabled: false
+management:
+  port: 0 #设置管理端口为随机端口
+choerodon:
+  swagger:
+    skip:
+      service: register-server, api-gateway, gateway-helper, oauth-server, config-server, event-store-service
+

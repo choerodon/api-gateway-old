@@ -36,22 +36,13 @@ import io.choerodon.gateway.filter.HeaderWrapperFilter;
 @EnableConfigurationProperties(GatewayHelperProperties.class)
 public class CustomZuulConfig {
 
-    @Autowired
-    private ZuulProperties zuulProperties;
-
-    @Autowired
-    private ServerProperties server;
-
-    @Autowired
-    private GatewayHelperProperties gatewayHelperProperties;
-
     @SuppressWarnings("rawtypes")
     @Autowired(required = false)
     private List<RibbonRequestCustomizer> requestCustomizers = Collections.emptyList();
 
     @Bean
-    public RouteLocator memoryRouterOperator() {
-        return new MemoryRouteLocator(this.server.getServletPrefix(), this.zuulProperties);
+    public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
+        return new MemoryRouteLocator(server.getServletPrefix(), zuulProperties);
     }
 
     @Bean(name = "handRouterOperator")
@@ -67,7 +58,7 @@ public class CustomZuulConfig {
      * @return 配置的GateWayHelperFilter
      */
     @Bean
-    public GateWayHelperFilter gateWayHelperFilter(RibbonCommandFactory<?> ribbonCommandFactory) {
+    public GateWayHelperFilter gateWayHelperFilter(GatewayHelperProperties gatewayHelperProperties, RibbonCommandFactory<?> ribbonCommandFactory) {
         return new GateWayHelperFilter(gatewayHelperProperties,
                 requestCustomizers,
                 ribbonCommandFactory);
@@ -121,7 +112,7 @@ public class CustomZuulConfig {
     }
 
     @Bean
-    public HeaderWrapperFilter headerWrapperFilter() {
+    public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
         return new HeaderWrapperFilter(gatewayHelperProperties);
     }
 }
