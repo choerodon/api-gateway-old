@@ -107,7 +107,7 @@ public class GateWayHelperFilter implements Filter {
                 out.println(e.getMessage());
                 out.flush();
             } catch (IOException e1) {
-                LOGGER.info("printWriter io error, {}", e.getMessage());
+                LOGGER.info("printWriter io error, {}", e);
             } finally {
                 if (out != null) {
                     out.close();
@@ -138,7 +138,7 @@ public class GateWayHelperFilter implements Filter {
             }
             out.flush();
         } catch (IOException e) {
-            LOGGER.info("printWriter io error, {}", e.getMessage());
+            LOGGER.info("printWriter io error, {}", e);
         } finally {
             if (out != null) {
                 out.close();
@@ -159,7 +159,7 @@ public class GateWayHelperFilter implements Filter {
         try {
             return command.execute();
         } catch (HystrixRuntimeException ex) {
-            throw new ZuulException(ex, "Forwarding service error", 500, ex.getMessage());
+            throw new ZuulException(ex, "Forwarding gateway helper error", 500, ex.getMessage());
         }
     }
 
