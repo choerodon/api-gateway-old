@@ -1,5 +1,6 @@
 package io.choerodon.gateway.config;
 
+import io.choerodon.gateway.filter.CustomShallowEtagHeaderFilter;
 import io.choerodon.gateway.filter.GateWayHelperFilter;
 import io.choerodon.gateway.filter.HeaderWrapperFilter;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
@@ -102,6 +103,11 @@ public class CustomZuulConfig {
     @Bean
     public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
         return new HeaderWrapperFilter(gatewayHelperProperties);
+    }
+
+    @Bean
+    public CustomShallowEtagHeaderFilter etagHeaderFilter() {
+        return new CustomShallowEtagHeaderFilter();
     }
 
 }
