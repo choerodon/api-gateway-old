@@ -41,11 +41,12 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * 再交给zuul去路由到真实服务
  *
  * @author zhipeng.zuo
- * @date 18-1-4
  */
 public class GateWayHelperFilter implements Filter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GateWayHelperFilter.class);
+
+    private static final int GATEWAY_HELPER_NOT_PASS = 403;
 
     private static final String ENCODING_UTF8 = "UTF-8";
 
@@ -123,7 +124,7 @@ public class GateWayHelperFilter implements Filter {
     private void setGatewayHelperFailureResponse(ClientHttpResponse clientHttpResponse,
                                                  HttpServletResponse res) throws IOException {
         int statusCode = clientHttpResponse.getRawStatusCode();
-        res.setStatus(statusCode);
+        res.setStatus(GATEWAY_HELPER_NOT_PASS);
         res.setCharacterEncoding("utf-8");
         PrintWriter out = null;
         try {
