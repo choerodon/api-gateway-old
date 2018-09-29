@@ -1,11 +1,7 @@
 package io.choerodon.gateway.config;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import javax.servlet.Filter;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import io.choerodon.gateway.filter.GateWayHelperFilter;
+import io.choerodon.gateway.filter.HeaderWrapperFilter;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -21,24 +17,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.filter.ShallowEtagHeaderFilter;
 
-import io.choerodon.gateway.filter.GateWayHelperFilter;
-import io.choerodon.gateway.filter.HeaderWrapperFilter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 自定义configuration配置类
  *
  * @author zhipeng.zuo
- * @date 18-1-4
  */
 @Configuration
 @EnableConfigurationProperties(GatewayHelperProperties.class)
 public class CustomZuulConfig {
-
-    @SuppressWarnings("rawtypes")
-    @Autowired(required = false)
-    private List<RibbonRequestCustomizer> requestCustomizers = Collections.emptyList();
 
     @Bean
     public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
@@ -58,9 +50,10 @@ public class CustomZuulConfig {
      * @return 配置的GateWayHelperFilter
      */
     @Bean
-    public GateWayHelperFilter gateWayHelperFilter(GatewayHelperProperties gatewayHelperProperties, RibbonCommandFactory<?> ribbonCommandFactory) {
+    public GateWayHelperFilter gateWayHelperFilter(GatewayHelperProperties gatewayHelperProperties, RibbonCommandFactory<?> ribbonCommandFactory,
+                                                   Optional<List<RibbonRequestCustomizer>> requestCustomizers) {
         return new GateWayHelperFilter(gatewayHelperProperties,
-                requestCustomizers,
+                requestCustomizers.orElseGet(Collections::emptyList),
                 ribbonCommandFactory);
     }
 
@@ -96,7 +89,7 @@ public class CustomZuulConfig {
         config.addAllowedMethod("*");
         //添加response暴露的header
         String[] responseHeader =
-                {"date", "content-encoding", "server", "etag", "vary",
+                {"date", "content-encoding", "server", "etag", "vary", "Cache-Control", "Last-Modified",
                         "content-type", "transfer-encoding", "connection", "x-application-context"};
         config.setExposedHeaders(Arrays.asList(responseHeader));
         source.registerCorsConfiguration("/**", config);
@@ -107,12 +100,8 @@ public class CustomZuulConfig {
     }
 
     @Bean
-    public Filter shallowEtagHeaderFilter() {
-        return new ShallowEtagHeaderFilter();
-    }
-
-    @Bean
     public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
         return new HeaderWrapperFilter(gatewayHelperProperties);
     }
+
 }
