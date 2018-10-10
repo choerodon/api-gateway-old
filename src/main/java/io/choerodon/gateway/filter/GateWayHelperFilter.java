@@ -13,7 +13,6 @@ import org.springframework.cloud.netflix.zuul.filters.route.RibbonCommandFactory
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
@@ -31,7 +30,6 @@ import java.net.URLDecoder;
 import java.util.*;
 
 import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
-import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.REQUEST_URI_KEY;
 
 /**
@@ -40,7 +38,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * gateway helper返回后将授权码和label加到消息头部
  * 再交给zuul去路由到真实服务
  *
- * @author zhipeng.zuo
+ * @author flyleft
  */
 public class GateWayHelperFilter implements Filter {
 
@@ -55,8 +53,6 @@ public class GateWayHelperFilter implements Filter {
     private RibbonCommandFactory<?> ribbonCommandFactory;
 
     private List<RibbonRequestCustomizer> requestCustomizers;
-
-    private final AntPathMatcher matcher = new AntPathMatcher();
 
     /**
      * 构造器
@@ -83,18 +79,10 @@ public class GateWayHelperFilter implements Filter {
             throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        boolean shouldSkipHelper = Arrays.stream(gatewayHelperProperties.getHelperSkipPaths())
-                .anyMatch(t -> matcher.match(t, req.getRequestURI()));
-        if (shouldSkipHelper) {
-            chain.doFilter(req, res);
-            return;
-        }
-        ClientHttpResponse clientHttpResponse = null;
-        try {
-            RibbonCommandContext commandContext = buildCommandContext(req);
-            clientHttpResponse = forward(commandContext);
+        RibbonCommandContext commandContext = buildCommandContext(req);
+        try (ClientHttpResponse clientHttpResponse = forward(commandContext)) {
             if (clientHttpResponse.getStatusCode().is2xxSuccessful()) {
-                request.setAttribute(HEADER_JWT, clientHttpResponse.getHeaders().getFirst(HEADER_TOKEN));
+                request.setAttribute(HEADER_JWT, clientHttpResponse.getHeaders().getFirst(HEADER_JWT));
                 chain.doFilter(request, res);
             } else {
                 setGatewayHelperFailureResponse(clientHttpResponse, res);
@@ -102,48 +90,33 @@ public class GateWayHelperFilter implements Filter {
         } catch (ZuulException e) {
             res.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             res.setCharacterEncoding("utf-8");
-            PrintWriter out = null;
-            try {
-                out = res.getWriter();
+            try (PrintWriter out = res.getWriter()) {
                 out.println(e.getMessage());
                 out.flush();
-            } catch (IOException e1) {
-                LOGGER.info("printWriter io error, {}", e);
-            } finally {
-                if (out != null) {
-                    out.close();
-                }
-            }
-        } finally {
-            if (clientHttpResponse != null) {
-                clientHttpResponse.close();
             }
         }
     }
 
-    private void setGatewayHelperFailureResponse(ClientHttpResponse clientHttpResponse,
+    private void setGatewayHelperFailureResponse(ClientHttpResponse cr,
                                                  HttpServletResponse res) throws IOException {
-        int statusCode = clientHttpResponse.getRawStatusCode();
-        res.setStatus(GATEWAY_HELPER_NOT_PASS);
+        int statusCode = cr.getRawStatusCode();
         res.setCharacterEncoding("utf-8");
-        PrintWriter out = null;
-        try {
-            out = res.getWriter();
-            if (statusCode == HttpStatus.UNAUTHORIZED.value()) {
-                res.setContentType("application/xhtml+xml");
-                out.println("<oauth><error_description>Full authentication is required to access "
-                        + "this resource</error_description><error>unauthorized</error></oauth>");
+        res.setContentType("application/xhtml+xml");
+        try (PrintWriter out = res.getWriter()) {
+            if (statusCode == HttpStatus.FORBIDDEN.value()) {
+                res.setStatus(GATEWAY_HELPER_NOT_PASS);
+                String message = "<oauth><status>" + cr.getHeaders().getFirst("request-status")
+                        + "</status><code>" + cr.getHeaders().getFirst("request-code") + "</code><message>"
+                        + cr.getHeaders().getFirst("request-message") + "</message></oauth>";
+                out.println(message);
             } else {
-                res.setContentType("text/plain");
-                out.println("");
+                String message = "<error><status>" + cr.getHeaders().getFirst("request-status")
+                        + "</status><code>" + cr.getHeaders().getFirst("request-code") + "</code><message>"
+                        + cr.getHeaders().getFirst("request-message") + "</message></error>";
+                res.setStatus(500);
+                out.println(message);
             }
             out.flush();
-        } catch (IOException e) {
-            LOGGER.info("printWriter io error, {}", e);
-        } finally {
-            if (out != null) {
-                out.close();
-            }
         }
     }
 

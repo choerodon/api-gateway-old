@@ -15,7 +15,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 /**
  * 添加token和label到请求header
  *
- * @author zhipeng.zuo
+ * @author flyleft
  */
 public class HeaderWrapperFilter extends ZuulFilter {
 

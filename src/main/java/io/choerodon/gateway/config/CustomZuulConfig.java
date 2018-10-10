@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * 自定义configuration配置类
  *
- * @author zhipeng.zuo
+ * @author flyleft
  */
 @Configuration
 @EnableConfigurationProperties(GatewayHelperProperties.class)
