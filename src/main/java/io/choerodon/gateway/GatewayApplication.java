@@ -10,7 +10,7 @@ import org.springframework.retry.annotation.EnableRetry;
 
 /**
  * 运行主类
- * @author zhipeng.zuo
+ * @author flyleft
  */
 @EnableRetry
 @EnableZuulProxy
