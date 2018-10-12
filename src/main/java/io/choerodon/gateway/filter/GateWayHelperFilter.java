@@ -170,6 +170,7 @@ public class GateWayHelperFilter implements Filter {
         }
         headers.set(HttpHeaders.CONTENT_TYPE, "text/plain");
         headers.set(HttpHeaders.CONTENT_LENGTH, "0");
+        headers.set(HttpHeaders.CONNECTION, "keep-alive");
         return headers;
     }
 
@@ -177,7 +178,6 @@ public class GateWayHelperFilter implements Filter {
         String name = headerName.toLowerCase();
         switch (name) {
             case "host":
-            case "connection":
             case "server":
             case "transfer-encoding":
             case "x-application-context":
