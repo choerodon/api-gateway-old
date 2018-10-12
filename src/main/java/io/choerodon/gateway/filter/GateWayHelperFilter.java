@@ -168,7 +168,8 @@ public class GateWayHelperFilter implements Filter {
                 }
             }
         }
-        headers.set(HttpHeaders.ACCEPT_ENCODING, "gzip");
+        headers.set(HttpHeaders.CONTENT_TYPE, "text/plain");
+        headers.set(HttpHeaders.CONTENT_LENGTH, "0");
         return headers;
     }
 
@@ -177,8 +178,6 @@ public class GateWayHelperFilter implements Filter {
         switch (name) {
             case "host":
             case "connection":
-            case "content-length":
-            case "content-encoding":
             case "server":
             case "transfer-encoding":
             case "x-application-context":
