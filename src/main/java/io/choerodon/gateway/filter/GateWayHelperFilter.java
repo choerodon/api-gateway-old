@@ -1,7 +1,6 @@
 package io.choerodon.gateway.filter;
 
 import com.netflix.hystrix.exception.HystrixRuntimeException;
-import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
 import io.choerodon.gateway.config.GatewayHelperProperties;
 import org.slf4j.Logger;
@@ -16,8 +15,6 @@ import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.util.UriUtils;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +27,6 @@ import java.net.URLDecoder;
 import java.util.*;
 
 import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
-import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.REQUEST_URI_KEY;
 
 /**
  * 自定义的servlet filter
@@ -140,7 +136,6 @@ public class GateWayHelperFilter implements Filter {
     private RibbonCommandContext buildCommandContext(HttpServletRequest req) {
         Boolean retryable = gatewayHelperProperties.isRetryable();
         String verb = getVerb(req);
-        String uri = buildZuulRequestUri(req);
         MultiValueMap<String, String> headers = buildZuulRequestHeaders(req);
         MultiValueMap<String, String> params = buildZuulRequestQueryParams(req);
         InputStream requestEntity;
@@ -148,8 +143,8 @@ public class GateWayHelperFilter implements Filter {
         String requestService = gatewayHelperProperties.getServiceId();
         requestEntity = new ByteArrayInputStream("".getBytes());
         contentLength = 0L;
-        return new RibbonCommandContext(requestService, verb, uri, retryable, headers, params,
-                requestEntity, this.requestCustomizers, contentLength);
+        return new RibbonCommandContext(requestService, verb, req.getRequestURI(), retryable,
+                headers, params, requestEntity, this.requestCustomizers, contentLength);
     }
 
 
@@ -229,21 +224,6 @@ public class GateWayHelperFilter implements Filter {
         return params;
     }
 
-    private String buildZuulRequestUri(HttpServletRequest request) {
-        RequestContext context = RequestContext.getCurrentContext();
-        String uri = request.getRequestURI();
-        String contextUri = (String) context.get(REQUEST_URI_KEY);
-        if (contextUri != null) {
-            try {
-                String encoding = request.getCharacterEncoding() != null ? request.getCharacterEncoding()
-                        : WebUtils.DEFAULT_CHARACTER_ENCODING;
-                uri = UriUtils.encodePath(contextUri, encoding).replace("//", "/");
-            } catch (Exception e) {
-                LOGGER.info("buildZuulRequestUri error, {}", e.getMessage());
-            }
-        }
-        return uri;
-    }
 
     @Override
     public void destroy() {

@@ -63,7 +63,9 @@ class GateWayHelperFilterSpec extends Specification {
         def gateWayHelperFilter = new GateWayHelperFilter(gatewayHelperProperties, requestCustomizers, ribbonCommandFactory)
 
         and: "构造doFilter参数"
-        def request = Mock(HttpServletRequest)
+        def request = Mock(HttpServletRequest) {
+            getQueryString() >> 'a=23&b=34&c=34'
+        }
         def response = Mock(HttpServletResponse)
         def chain = Mock(FilterChain)
 
@@ -82,6 +84,7 @@ class GateWayHelperFilterSpec extends Specification {
         when: "401情况"
         myClientHttpResponse.setStatusCode(401)
         gateWayHelperFilter.doFilter(request, response, chain)
+        request.getQueryString() >> 'a=23&b'
 
         then: "执行"
         _ * request.getRequestURI() >> "/manager/v1/swaggers/resources"
@@ -89,16 +92,6 @@ class GateWayHelperFilterSpec extends Specification {
         _ * ribbonCommandFactory.create(_) >> myRibbonCommand
         _ * response.getWriter() >> Mock(PrintWriter)
         0 * chain.doFilter(request, response)
-
-        when: "直接跳过的服务"
-        myClientHttpResponse.setStatusCode(200)
-        gateWayHelperFilter.doFilter(request, response, chain)
-
-        then: "执行"
-        _ * request.getRequestURI() >> "/manager/swagger-ui.html"
-        _ * request.getMethod() >> "GET"
-        1 * chain.doFilter(request, response)
-
 
         when: "抛异常情况"
         gateWayHelperFilter.doFilter(request, response, chain)
