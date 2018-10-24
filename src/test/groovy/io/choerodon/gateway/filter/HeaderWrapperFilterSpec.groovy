@@ -22,13 +22,30 @@ import javax.servlet.http.HttpServletRequest
 @PowerMockRunnerDelegate(Sputnik.class)
 class HeaderWrapperFilterSpec extends Specification {
 
+    def gatewayHelperProperties = Mock(GatewayHelperProperties) {
+        isEnabledJwtLog() >> true
+    }
+    def headerWrapperFilter = new HeaderWrapperFilter(gatewayHelperProperties)
+
     def "FilterType"() {
+        when: '调用filterType'
+        def type = headerWrapperFilter.filterType()
+        then: '验证'
+        type == 'pre'
     }
 
     def "FilterOrder"() {
+        when: '调用filterOrder'
+        def order = headerWrapperFilter.filterOrder()
+        then: '验证'
+        order == -1
     }
 
     def "ShouldFilter"() {
+        when: '调用shouldFilter'
+        def shouldFilter = headerWrapperFilter.shouldFilter()
+        then: '验证'
+        shouldFilter
     }
 
     def "Run"() {
@@ -37,11 +54,8 @@ class HeaderWrapperFilterSpec extends Specification {
         def ctx = Mock(RequestContext)
         PowerMockito.when(RequestContext.getCurrentContext()).thenReturn(ctx)
         def request = Mock(HttpServletRequest)
-        def gatewayHelperProperties = Mock(GatewayHelperProperties)
-        gatewayHelperProperties.setEnabledJwtLog(true)
 
         when: ""
-        def headerWrapperFilter = new HeaderWrapperFilter(gatewayHelperProperties)
         def value = headerWrapperFilter.run()
 
         then: ""
