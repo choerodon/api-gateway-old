@@ -2,6 +2,26 @@
 
 这个项目的所有显著变化都将被记录在这个文件中。
 
+## [0.11.0] - 2018-11-13
+
+### 修复
+
+- 修复请求为`multipart/form-data`时，转发到`gateway-helper`处理失败的异常
+
+### 修改
+
+- 更新了基础镜像
+- 优化日志打印
+- 修改转发到`gateway-helper`的connect为keep-alive
+
+### 新增
+
+- 添加了自定义的`etagFilter`
+
+### 删除
+
+- 去除了`api-gateway`的`etagFilter`
+
 ## [0.10.0] - 2018-09-27
 
 ### 修改
