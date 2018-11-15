@@ -30,26 +30,6 @@ env:
      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka-0.kafka-headless.kafka.svc.cluster.local:9092,kafka-1.kafka-headless.kafka.svc.cluster.local:9092,kafka-2.kafka-headless.kafka.svc.cluster.local:9092
      SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper-0.zookeeper-headless.zookeeper.svc.cluster.local:2181,zookeeper-1.zookeeper-headless.zookeeper.svc.cluster.local:2181,zookeeper-2.zookeeper-headless.zookeeper.svc.cluster.local:2181
 
-     SKYWALKING_ENABLED: true
-     #skywalking代理jar包，添加则开启skywalking，删除则关闭
-     SKYWALKING_JAVAAGENT: /agent/skywalking-agent.jar
-     #skywalking ui显示的应用名称，默认为服务名
-     SKYWALKING_AGENTCOLLECTOR_BACKEND_SERVICE_APPLICATION_CODE: api-gateway
-     #oap服务地址和端口
-     SKYWALKING_COLLECTOR_BACKEND_SERVICE: oap.skywalking:11800
-     #采样率，每三秒采样次数，-1表示100%采样率
-     SKYWALKING_AGENT_SAMPLE_N_PER_3_SECS: -1
-#    #此参数用以表明跨进程链路之中的header；不同的namespace在一次跨进程链路中会导致链路中断
-#    SKYWALKING_AGENT_NAMESPACE: default-namespace
-#    #与Collector进行通信的token，需要与collector设置的一样
-#    SKYWALKING_AGENT_AUTHENTICATION: xxxx
-#    #每个Segment中最多有多少个Span
-#    SKYWALKING_AGENT_SPAN_LIMIT_PER_SEGMENT:
-#    #需要忽略的调用
-#    SKYWALKING_AGENT_IGNORE_SUFFIX:
-#    #是否保存增强后的字节码文件
-#    SKYWALKING_AGENT_IS_OPEN_DEBUGGING_CLASS:
-
 service:
   enable: false
   type: ClusterIP
