@@ -11,15 +11,6 @@ spring:
         default-binder: kafka
       bus:
         enabled: true
-  sleuth:
-    integration:
-      enabled: false
-    scheduled:
-      enabled: false
-    sampler:
-      percentage: 1.0
-    stream:
-      enabled: true
   http:
     multipart:
       max-file-size: 30MB
