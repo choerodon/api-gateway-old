@@ -64,9 +64,6 @@ zuul:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
 hystrix:
-  stream:
-      queue:
-        enabled: true
   command:
     default:
       execution:
