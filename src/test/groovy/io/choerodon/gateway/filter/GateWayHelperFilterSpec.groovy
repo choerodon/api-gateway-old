@@ -32,8 +32,7 @@ class GateWayHelperFilterSpec extends Specification {
     @Autowired
     private GatewayHelperProperties gatewayHelperProperties
 
-    @Autowired
-    private List<RibbonRequestCustomizer> requestCustomizers
+    private List<RibbonRequestCustomizer> requestCustomizers = Mock(List)
 
 
     @Autowired
@@ -50,7 +49,7 @@ class GateWayHelperFilterSpec extends Specification {
         def ribbonCommandFactory = Mock(RibbonCommandFactory)
         def command = Mock(RibbonCommand)
         def exception = Mock(HystrixRuntimeException)
-        command.execute() >> { throw exception}
+        command.execute() >> { throw exception }
 
         and: "构造request.getHeaderNames()返回对象"
         Set<String> set = new HashSet<>()
