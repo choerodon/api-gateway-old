@@ -1,16 +1,4 @@
 spring:
-  cloud:
-      stream:
-        kafka:
-            binder:
-              brokers: 127.0.0.1:9092
-              zkNodes: 127.0.0.1:2181
-        bindings:
-          input:
-            destination: eureka-instance
-        default-binder: kafka
-      bus:
-        enabled: true
   http:
     multipart:
       max-file-size: 30MB
@@ -30,10 +18,6 @@ eureka:
 zuul:
   addHostHeader: true
   routes:
-    event:
-      path: /event/**
-      serviceId: event-store-service
-      helperService: gateway-helper
     devops:
       path: /devops/**
       serviceId: devops-service

@@ -50,6 +50,8 @@ public class GateWayHelperFilter implements Filter {
 
     private List<RibbonRequestCustomizer> requestCustomizers;
 
+    private static final String CONFIG_ENDPOINT = "/choerodon/config";
+
     /**
      * 构造器
      *
@@ -76,6 +78,10 @@ public class GateWayHelperFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         RibbonCommandContext commandContext = buildCommandContext(req);
+        if (CONFIG_ENDPOINT.equals(req.getRequestURI())) {
+            chain.doFilter(request, res);
+            return;
+        }
         try (ClientHttpResponse clientHttpResponse = forward(commandContext)) {
             if (clientHttpResponse.getStatusCode().is2xxSuccessful()) {
                 request.setAttribute(HEADER_JWT, clientHttpResponse.getHeaders().getFirst(HEADER_JWT));
