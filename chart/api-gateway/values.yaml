@@ -30,9 +30,9 @@ env:
      SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS: kafka-0.kafka-headless.kafka.svc.cluster.local:9092,kafka-1.kafka-headless.kafka.svc.cluster.local:9092,kafka-2.kafka-headless.kafka.svc.cluster.local:9092
      SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES: zookeeper-0.zookeeper-headless.zookeeper.svc.cluster.local:2181,zookeeper-1.zookeeper-headless.zookeeper.svc.cluster.local:2181,zookeeper-2.zookeeper-headless.zookeeper.svc.cluster.local:2181
      # skywalking 代理端配置
-     SKYWLKING_OPS: >-
+     SKYWALKING_OPTS: >-
        -javaagent:/agent/skywalking-agent.jar
-       -Dskywalking.agent.application_code=iam-service
+       -Dskywalking.agent.application_code=api-gateway
        -Dskywalking.agent.sample_n_per_3_secs=-1
        -Dskywalking.collector.backend_service=oap.skywalking:11800
      
