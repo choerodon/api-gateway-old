@@ -85,7 +85,7 @@ hystrix:
 choerodon:
   gateway:
     allowed:
-      origin: *
+      origin: '*'
     helper:
       helper-skip-paths: /oauth/**, /manager/swagger-ui.html, /manager/swagger-resources/**, /manager/webjars/**, /manager/docs/**
       service-id: gateway-helper
