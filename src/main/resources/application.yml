@@ -56,6 +56,8 @@ hystrix:
             timeoutInMilliseconds: 20000
 choerodon:
   gateway:
+    allowed:
+      origin: '*'
     helper:
       helper-skip-paths: /oauth/**, /manager/swagger-ui.html, /manager/swagger-resources/**, /manager/webjars/**, /manager/docs/**
       service-id: gateway-helper
