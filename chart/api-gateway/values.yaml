@@ -27,6 +27,7 @@ env:
      SPRING_CLOUD_CONFIG_ENABLED: true
      SPRING_CLOUD_CONFIG_URI: http://localhost:8010
      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://register-server.io-choerodon:8000/eureka/
+     CHOERODON_GATEWAY_ALLOWED_ORIGIN: '*'
      # skywalking 代理端配置
      SKYWALKING_OPTS: >-
        -javaagent:/agent/skywalking-agent.jar
