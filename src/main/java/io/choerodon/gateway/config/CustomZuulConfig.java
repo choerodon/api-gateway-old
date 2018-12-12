@@ -1,7 +1,11 @@
 package io.choerodon.gateway.config;
 
-import io.choerodon.gateway.filter.GateWayHelperFilter;
-import io.choerodon.gateway.filter.HeaderWrapperFilter;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -18,10 +22,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import io.choerodon.gateway.filter.GateWayHelperFilter;
+import io.choerodon.gateway.filter.HeaderWrapperFilter;
 
 /**
  * 自定义configuration配置类
@@ -31,6 +33,11 @@ import java.util.Optional;
 @Configuration
 @EnableConfigurationProperties(GatewayHelperProperties.class)
 public class CustomZuulConfig {
+
+
+    @Value("${choerodon.gateway.allowed.origin:*}")
+    private String allowedOrigin;
+
 
     @Bean
     public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
@@ -83,7 +90,7 @@ public class CustomZuulConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
+        config.addAllowedOrigin(allowedOrigin);
         config.addAllowedHeader("*");
         config.setMaxAge(18000L);
         config.addAllowedMethod("*");
