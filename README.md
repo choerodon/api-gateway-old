@@ -1,5 +1,5 @@
 # API Gateway
-The gateway service is responsible for routing requests to real services. Use `choerodon-starter-config-client` to pull configuration information including routes from `config-server `to implement dynamic routing. After requesting to remove the request body, it is forwarded to `gateway-helper` for authentication, traffic restrictions.
+The gateway service is responsible for routing requests to real services. Pulling configuration information including routes from `config-server `to implement dynamic routing. After requesting to remove the request body, it is forwarded to `gateway-helper` for authentication, traffic restrictions.
 
 ![Flow chart](screenshot/flow_chart.png)
 
@@ -17,14 +17,10 @@ The gateway service is responsible for routing requests to real services. Use `c
 ## Dependencies
 - `go-register-server`:   The registration of service.
 - `config-server`：The configuration of service
-- `kafka`
 
 ## Links
 
 * [Change Log](./CHANGELOG.zh-CN.md)
-
-## Reporting Issues
-If you find any shortcomings or bugs, please describe them in the [issue](https://github.com/choerodon/choerodon/issues/new?template=issue_template.md).
 
 ## How to Contribute
 Pull requests are welcome! [Follow](https://github.com/choerodon/choerodon/blob/master/CONTRIBUTING.md) to know for more information on how to contribute.
