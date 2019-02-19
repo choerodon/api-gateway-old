@@ -10,7 +10,7 @@ image:
 
 preJob:
   timeout: 300
-  image: registry.cn-hangzhou.aliyuncs.com/choerodon-tools/dbtool:0.6.1
+  image: registry.cn-hangzhou.aliyuncs.com/choerodon-tools/dbtool:0.6.2
   preConfig:
     enable: true
     configFile: application.yml
