@@ -18,9 +18,6 @@ eureka:
 zuul:
   addHostHeader: true
   routes:
-    devops:
-      path: /devops/**
-      serviceId: devops-service
     iam:
       path: /iam/**
       serviceId: iam-service
@@ -44,6 +41,24 @@ zuul:
     org:
       path: /org/**
       serviceId: organization-service
+    devops:
+      path: /devops/**
+      serviceId: devops-service
+    agile:
+      path: /agile/**
+      serviceId: agile-service
+    state:
+      path: /state/**
+      serviceId: state-machine-service
+    issue:
+      path: /issue/**
+      serviceId: issue-service
+    test-manager:
+      path: /test/**
+      serviceId: test-manager-service
+    wiki:
+      path: /wiki/**
+      serviceId: wiki-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie

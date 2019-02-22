@@ -4,10 +4,10 @@ kind: Job
 metadata:
   name: {{ .Release.Name }}-init-config
   labels:
-{{ include "service.labels.standard" . | indent 4 }}
-  annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
-    "helm.sh/hook-weight": "2"
+  {{ include "service.labels.standard" . | indent 4 }}
+annotations:
+  "helm.sh/hook": pre-install,pre-upgrade
+  "helm.sh/hook-weight": "2"
 spec:
   backoffLimit: 1
   activeDeadlineSeconds: {{ .Values.preJob.timeout | default 300 }}
@@ -16,30 +16,30 @@ spec:
       name: {{ .Release.Name }}-init-config
     spec:
       initContainers:
-      - command:
-        - sh
-        - -c
-        - cp -rf /var/choerodon/* /tools
-        image: {{ .Values.preJob.image }}
-        imagePullPolicy: Always
-        name: tools
-        volumeMounts:
-        - mountPath: /tools
-          name: tools-jar
+        - command:
+            - sh
+            - -c
+            - cp -rf /var/choerodon/* /tools
+          image: {{ .Values.preJob.image }}
+          imagePullPolicy: Always
+          name: tools
+          volumeMounts:
+            - mountPath: /tools
+              name: tools-jar
       containers:
-      - name: {{ .Release.Name }}-init-config
-        image: "{{ .Values.image.repository }}:{{ .Chart.Version }}"
-        command:
-        - /bin/sh
-        - -c
-        - '
-          java -Dspring.datasource.url="{{ .Values.preJob.preConfig.datasource.url }}" -Dspring.datasource.username={{ .Values.preJob.preConfig.datasource.username }} -Dspring.datasource.password={{ .Values.preJob.preConfig.datasource.password }} -Dservice.name={{ .Chart.Name }} -Dservice.version={{ .Chart.Version }} -Dconfig.file={{ .Values.preJob.preConfig.configFile }} -Dconfig.jar=/{{ .Chart.Name }}.jar -jar /var/choerodon/choerodon-tool-config.jar;
+        - name: {{ .Release.Name }}-init-config
+          image: "{{ .Values.image.repository }}:{{ .Chart.Version }}"
+          command:
+            - /bin/sh
+            - -c
+            - '
+          java -Dspring.datasource.url="{{ .Values.preJob.preConfig.datasource.url }}" -Dspring.datasource.username={{ .Values.preJob.preConfig.datasource.username }} -Dspring.datasource.password={{ .Values.preJob.preConfig.datasource.password }} -Dconfig.type={{ .Values.preJob.preConfig.configType }} -Dregister.host={{ .Values.preJob.preConfig.registerHost }} -Dservice.namespace={{ .Release.Namespace }} -Dservice.name={{ .Chart.Name }} -Dservice.version={{ .Chart.Version }} -Dconfig.file={{ .Values.preJob.preConfig.configFile }} -Dconfig.jar=/{{ .Chart.Name }}.jar -jar /var/choerodon/choerodon-tool-config.jar;
           '
-        volumeMounts:
-        - mountPath: /var/choerodon
-          name: tools-jar
+          volumeMounts:
+            - mountPath: /var/choerodon
+              name: tools-jar
       restartPolicy: Never
       volumes:
-      - emptyDir: {}
-        name: tools-jar
-{{- end }}
+        - emptyDir: {}
+          name: tools-jar
+  {{- end }}
