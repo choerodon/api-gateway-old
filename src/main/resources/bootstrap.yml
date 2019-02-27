@@ -13,6 +13,9 @@ spring:
           multiplier: 1.1
           maxInterval: 2000
 management:
-  port: 8081
+  server:
+    port: 8081
+choerodon:
   security:
-    enabled: false
+    basic:
+      enabled: false

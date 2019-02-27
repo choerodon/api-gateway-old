@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cloud.config.client.MemoryRouteLocator;
@@ -37,8 +38,8 @@ public class CustomZuulConfig {
     private String allowedOrigin;
 
     @Bean
-    public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties) {
-        return new MemoryRouteLocator(server.getServletPrefix(), zuulProperties);
+    public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties, DispatcherServletPath dispatcherServletPath) {
+        return new MemoryRouteLocator(dispatcherServletPath.getPrefix(), zuulProperties);
     }
 
     @Bean(name = "handRouterOperator")

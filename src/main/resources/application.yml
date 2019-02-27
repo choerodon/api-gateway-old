@@ -1,5 +1,5 @@
 spring:
-  http:
+  servlet:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
@@ -74,7 +74,6 @@ choerodon:
     allowed:
       origin: '*'
     helper:
-      helper-skip-paths: /oauth/**, /manager/swagger-ui.html, /manager/swagger-resources/**, /manager/webjars/**, /manager/docs/**
       service-id: gateway-helper
       enabled: true
       enabled-jwt-log: false
@@ -85,10 +84,3 @@ ribbon:
     enabled: false
   okhttp:
     enabled: true
-management:
-  port: 8081
-  security:
-    enabled: false
-security:
-  basic:
-    enabled: false
