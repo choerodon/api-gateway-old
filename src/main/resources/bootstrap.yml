@@ -15,7 +15,3 @@ spring:
 management:
   server:
     port: 8081
-choerodon:
-  security:
-    basic:
-      enabled: false
