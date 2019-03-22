@@ -59,6 +59,9 @@ zuul:
     wiki:
       path: /wiki/**
       serviceId: wiki-service
+    apim:
+      path: /apim/**
+      serviceId: apim-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
