@@ -48,7 +48,7 @@ ingress:
   host: gateway.choerodon.com.cn
 
 metrics:
-  path: /prometheus
+  path: /actuator/prometheus
   group: spring-boot
 
 logs:
