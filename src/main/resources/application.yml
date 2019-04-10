@@ -62,6 +62,9 @@ zuul:
     apim:
       path: /apim/**
       serviceId: apim-service
+    foundation:
+      path: /foundation/**
+      serviceId: foundation-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
