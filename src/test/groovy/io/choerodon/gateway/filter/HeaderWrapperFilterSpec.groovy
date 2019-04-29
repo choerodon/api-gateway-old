@@ -2,6 +2,7 @@ package io.choerodon.gateway.filter
 
 import com.netflix.zuul.context.RequestContext
 import io.choerodon.gateway.config.GatewayHelperProperties
+import io.choerodon.gateway.filter.route.HeaderWrapperFilter
 import org.junit.runner.RunWith
 import org.powermock.api.mockito.PowerMockito
 

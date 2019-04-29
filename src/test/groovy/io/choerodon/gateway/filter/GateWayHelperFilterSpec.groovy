@@ -3,6 +3,7 @@ package io.choerodon.gateway.filter
 import com.netflix.hystrix.exception.HystrixRuntimeException
 import io.choerodon.gateway.IntegrationTestConfiguration
 import io.choerodon.gateway.config.GatewayHelperProperties
+import io.choerodon.gateway.filter.route.GateWayHelperFilter
 import io.choerodon.gateway.my.MyClientHttpResponse
 import io.choerodon.gateway.my.MyRibbonCommand
 import org.springframework.beans.factory.annotation.Autowired
