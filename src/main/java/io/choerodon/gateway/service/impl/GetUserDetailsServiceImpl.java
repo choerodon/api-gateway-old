@@ -46,10 +46,6 @@ public class GetUserDetailsServiceImpl implements GetUserDetailsService {
         this.gatewayHelperProperties = gatewayHelperProperties;
     }
 
-//    public void setRestTemplate(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-
     @Override
     @SuppressWarnings("unchecked")
     public CustomUserDetailsWithResult getUserDetails(String token) {

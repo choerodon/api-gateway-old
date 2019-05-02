@@ -19,10 +19,6 @@ public class GetUserDetailsFilter implements HelperFilter {
         this.getUserDetailsService = getUserDetailsService;
     }
 
-//    public void setGetUserDetailsService(GetUserDetailsService getUserDetailsService) {
-//        this.getUserDetailsService = getUserDetailsService;
-//    }
-
     @Override
     public int filterOrder() {
         return 40;

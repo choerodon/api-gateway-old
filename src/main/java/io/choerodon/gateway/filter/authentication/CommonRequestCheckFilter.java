@@ -31,10 +31,6 @@ public class CommonRequestCheckFilter implements HelperFilter {
         this.permissionMapper = permissionMapper;
     }
 
-//    public void setPermissionMapper(PermissionMapper permissionMapper) {
-//        this.permissionMapper = permissionMapper;
-//    }
-
     @Override
     public int filterOrder() {
         return 80;

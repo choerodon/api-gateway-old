@@ -37,9 +37,6 @@ public class GateWayHelperFilter implements Filter {
      * @param gatewayHelper           鉴权helper
      */
     public GateWayHelperFilter(GatewayHelper gatewayHelper) {
-//        this.gatewayHelperProperties = gatewayHelperProperties;
-//        this.requestCustomizers = requestCustomizers;
-//        this.ribbonCommandFactory = ribbonCommandFactory;
         this.gatewayHelper = gatewayHelper;
 
     }
@@ -58,7 +55,7 @@ public class GateWayHelperFilter implements Filter {
             chain.doFilter(request, res);
             return;
         }
-        ResponseContext responseContext = gatewayHelper.authentication(req, res);
+        ResponseContext responseContext = gatewayHelper.authentication(req);
 
         if (responseContext.getHttpStatus().is2xxSuccessful()) {
             chain.doFilter(req, res);

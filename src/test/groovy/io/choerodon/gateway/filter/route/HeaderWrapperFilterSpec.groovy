@@ -1,4 +1,4 @@
-package io.choerodon.gateway.filter
+package io.choerodon.gateway.filter.route
 
 import com.netflix.zuul.context.RequestContext
 import io.choerodon.gateway.config.GatewayHelperProperties

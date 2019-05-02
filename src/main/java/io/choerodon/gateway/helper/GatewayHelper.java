@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +44,7 @@ public class GatewayHelper {
                 .collect(Collectors.toList());
     }
 
-    public ResponseContext authentication(HttpServletRequest request, HttpServletResponse response) {
+    public ResponseContext authentication(HttpServletRequest request) {
         RequestContext requestContext = new RequestContext(new CheckRequest(parse(request),
                 request.getRequestURI(), request.getMethod().toLowerCase()), new CheckResponse());
 
