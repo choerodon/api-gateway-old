@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 import static io.choerodon.core.variable.RequestVariableHolder.HEADER_JWT;
+import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
@@ -53,7 +54,7 @@ public class HeaderWrapperFilter extends ZuulFilter {
         if (StringUtils.isEmpty(token)) {
             LOGGER.info("Request get empty jwt , request uri: {} method: {}", request.getRequestURI(), request.getMethod());
         } else {
-            ctx.addZuulRequestHeader(HEADER_JWT, token);
+            ctx.addZuulRequestHeader(HEADER_TOKEN, token);
             if (gatewayHelperProperties.isEnabledJwtLog()) {
                 LOGGER.info("Request get jwt , request uri: {} method: {} JWT: {}",
                         request.getRequestURI(), request.getMethod(), token);
