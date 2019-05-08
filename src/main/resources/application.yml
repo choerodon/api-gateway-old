@@ -92,6 +92,9 @@ zuul:
     foundation:
       path: /foundation/**
       serviceId: foundation-service
+    knowledge:
+      path: /knowledge/**
+      serviceId: knowledgebase-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
