@@ -1,7 +1,7 @@
 package io.choerodon.gateway.filter.route;
 
 import io.choerodon.gateway.domain.ResponseContext;
-import io.choerodon.gateway.helper.GatewayHelper;
+import io.choerodon.gateway.helper.AuthenticationHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,14 +29,14 @@ public class GateWayHelperFilter implements Filter {
 
     private static final String CONFIG_ENDPOINT = "/choerodon/config";
 
-    private GatewayHelper gatewayHelper;
+    private AuthenticationHelper gatewayHelper;
 
     /**
      * 构造器
      *
      * @param gatewayHelper           鉴权helper
      */
-    public GateWayHelperFilter(GatewayHelper gatewayHelper) {
+    public GateWayHelperFilter(AuthenticationHelper gatewayHelper) {
         this.gatewayHelper = gatewayHelper;
 
     }

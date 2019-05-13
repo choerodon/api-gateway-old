@@ -1,6 +1,6 @@
 package io.choerodon.gateway.filter.authentication;
 
-import io.choerodon.gateway.config.GatewayHelperProperties;
+import io.choerodon.gateway.config.GatewayProperties;
 import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.domain.RequestContext;
 import org.springframework.stereotype.Component;
@@ -14,9 +14,9 @@ public class PermissionDisableOrSkipFilter implements HelperFilter {
 
     private final AntPathMatcher matcher = new AntPathMatcher();
 
-    private GatewayHelperProperties gatewayHelperProperties;
+    private GatewayProperties gatewayHelperProperties;
 
-    public PermissionDisableOrSkipFilter(GatewayHelperProperties gatewayHelperProperties) {
+    public PermissionDisableOrSkipFilter(GatewayProperties gatewayHelperProperties) {
         this.gatewayHelperProperties = gatewayHelperProperties;
     }
 

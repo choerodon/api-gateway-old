@@ -1,6 +1,7 @@
 package io.choerodon.gateway.filter.authentication
 
-import io.choerodon.gateway.config.GatewayHelperProperties
+
+import io.choerodon.gateway.config.GatewayProperties
 import io.choerodon.gateway.domain.CheckRequest
 import io.choerodon.gateway.domain.CheckResponse
 import io.choerodon.gateway.domain.CheckState
@@ -28,7 +29,7 @@ class PermissionDisableOrSkipFilterSpec extends Specification {
         def context = new RequestContext(new CheckRequest(null, "/iam/test", "method"),
                 new CheckResponse(message: "message", status: CheckState.SUCCESS_PASS_SITE))
         and: '创建HelperProperties'
-        def helperProperties = new GatewayHelperProperties()
+        def helperProperties = new GatewayProperties()
         def filter = new PermissionDisableOrSkipFilter(helperProperties)
 
         when: '权限不启用'

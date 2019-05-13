@@ -2,7 +2,7 @@ package io.choerodon.gateway.config;
 
 import java.util.Arrays;
 
-import io.choerodon.gateway.helper.GatewayHelper;
+import io.choerodon.gateway.helper.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
@@ -32,7 +32,7 @@ import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
  * @author flyleft
  */
 @Configuration
-@EnableConfigurationProperties(GatewayHelperProperties.class)
+@EnableConfigurationProperties(GatewayProperties.class)
 public class CustomZuulConfig {
     @Value("${choerodon.gateway.allowed.origin:*}")
     private String allowedOrigin;
@@ -54,7 +54,7 @@ public class CustomZuulConfig {
      * @return 配置的GateWayHelperFilter
      */
     @Bean
-    public GateWayHelperFilter gateWayHelperFilter(GatewayHelper gatewayHelper) {
+    public GateWayHelperFilter gateWayHelperFilter(AuthenticationHelper gatewayHelper) {
         return new GateWayHelperFilter(gatewayHelper);
     }
 
@@ -101,12 +101,12 @@ public class CustomZuulConfig {
     }
 
     @Bean
-    public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
+    public HeaderWrapperFilter headerWrapperFilter(GatewayProperties gatewayHelperProperties) {
         return new HeaderWrapperFilter(gatewayHelperProperties);
     }
 
     @Bean
-    public Signer jwtSigner(GatewayHelperProperties gatewayHelperProperties) {
+    public Signer jwtSigner(GatewayProperties gatewayHelperProperties) {
         return new MacSigner(gatewayHelperProperties.getJwtKey());
     }
 

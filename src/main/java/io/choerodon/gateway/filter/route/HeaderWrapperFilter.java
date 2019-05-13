@@ -2,7 +2,7 @@ package io.choerodon.gateway.filter.route;
 
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
-import io.choerodon.gateway.config.GatewayHelperProperties;
+import io.choerodon.gateway.config.GatewayProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -22,10 +22,10 @@ public class HeaderWrapperFilter extends ZuulFilter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HeaderWrapperFilter.class);
 
-    private GatewayHelperProperties gatewayHelperProperties;
+    private GatewayProperties gatewayHelperProperties;
 
 
-    public HeaderWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
+    public HeaderWrapperFilter(GatewayProperties gatewayHelperProperties) {
         this.gatewayHelperProperties = gatewayHelperProperties;
     }
 

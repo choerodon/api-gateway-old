@@ -25,7 +25,7 @@ import static io.choerodon.core.variable.RequestVariableHolder.HEADER_TOKEN;
  * @since 2019-04-29
  */
 @Component
-public class GatewayHelper {
+public class AuthenticationHelper {
 
     private static final String ACCESS_TOKEN_PARAM = "access_token";
 
@@ -35,9 +35,9 @@ public class GatewayHelper {
 
     private List<HelperFilter> helperFilters;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GatewayHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationHelper.class);
 
-    public GatewayHelper(Optional<List<HelperFilter>> optionalHelperFilters) {
+    public AuthenticationHelper(Optional<List<HelperFilter>> optionalHelperFilters) {
         helperFilters = optionalHelperFilters.orElseGet(Collections::emptyList)
                 .stream()
                 .sorted(Comparator.comparing(HelperFilter::filterOrder))

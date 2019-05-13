@@ -1,6 +1,7 @@
 package io.choerodon.gateway.service
 
-import io.choerodon.gateway.config.GatewayHelperProperties
+
+import io.choerodon.gateway.config.GatewayProperties
 import io.choerodon.gateway.domain.CheckState
 import io.choerodon.gateway.service.impl.GetUserDetailsServiceImpl
 import org.springframework.http.HttpEntity
@@ -16,7 +17,7 @@ class GetUserDetailsServiceSpec extends Specification {
     def '测试getUserDetails方法'() {
         given: 'mock RestTemplate'
 
-        def getUserDetailsService = new GetUserDetailsServiceImpl(new MockOkRestTemplate(), new GatewayHelperProperties())
+        def getUserDetailsService = new GetUserDetailsServiceImpl(new MockOkRestTemplate(), new GatewayProperties())
 
         when: '当oauth返回2XX时'
         def result = getUserDetailsService.getUserDetails('')
@@ -28,7 +29,7 @@ class GetUserDetailsServiceSpec extends Specification {
 
 
         when: '当oauth返回token不合法时'
-        getUserDetailsService = new GetUserDetailsServiceImpl(new MockInValidTokenRestTemplate(), new GatewayHelperProperties())
+        getUserDetailsService = new GetUserDetailsServiceImpl(new MockInValidTokenRestTemplate(), new GatewayProperties())
         def result1 = getUserDetailsService.getUserDetails('')
 
         then: '验证结果'
@@ -37,7 +38,7 @@ class GetUserDetailsServiceSpec extends Specification {
 
 
         when: '当oauth返回token过期时'
-        getUserDetailsService = new GetUserDetailsServiceImpl(new MockExpiredTokenRestTemplate(), new GatewayHelperProperties())
+        getUserDetailsService = new GetUserDetailsServiceImpl(new MockExpiredTokenRestTemplate(), new GatewayProperties())
         def result2 = getUserDetailsService.getUserDetails('')
 
         then: '验证结果'

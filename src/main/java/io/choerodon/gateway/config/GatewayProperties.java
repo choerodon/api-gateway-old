@@ -10,8 +10,8 @@ import java.util.List;
  *
  * @author flyleft
  */
-@ConfigurationProperties(prefix = "choerodon.gateway.helper")
-public class GatewayHelperProperties {
+@ConfigurationProperties(prefix = "choerodon.gateway")
+public class GatewayProperties {
 
     private Permission permission = new Permission();
 
@@ -25,7 +25,7 @@ public class GatewayHelperProperties {
 
     private String oauthInfoUri = "http://oauth-server/oauth/api/user";
 
-    public GatewayHelperProperties() {
+    public GatewayProperties() {
         //保留一个空构造器
     }
 
@@ -79,7 +79,7 @@ public class GatewayHelperProperties {
 
     @Override
     public String toString() {
-        return "GatewayHelperProperties{" +
+        return "GatewayProperties{" +
                 "permission=" + permission +
                 ", enabled=" + enabled +
                 ", retryable=" + retryable +

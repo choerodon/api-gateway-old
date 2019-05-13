@@ -17,7 +17,7 @@ import spock.lang.Specification
 import javax.servlet.http.HttpServletRequest
 
 
-@PrepareForTest(GatewayHelper.class)
+@PrepareForTest(AuthenticationHelper.class)
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(Sputnik.class)
 class GatewayHelperSpec extends Specification {
@@ -34,7 +34,7 @@ class GatewayHelperSpec extends Specification {
 
         and:
         Optional<List<HelperFilter>> list = Optional.empty()
-        GatewayHelper gatewayHelper = new GatewayHelper(list)
+        AuthenticationHelper gatewayHelper = new AuthenticationHelper(list)
 
         ResponseContext responseContext = null
 

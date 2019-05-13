@@ -2,7 +2,7 @@ package io.choerodon.gateway.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.choerodon.core.oauth.CustomUserDetails;
-import io.choerodon.gateway.config.GatewayHelperProperties;
+import io.choerodon.gateway.config.GatewayProperties;
 import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.domain.CustomUserDetailsWithResult;
 import io.choerodon.gateway.service.GetUserDetailsService;
@@ -39,9 +39,9 @@ public class GetUserDetailsServiceImpl implements GetUserDetailsService {
 
     private RestTemplate restTemplate;
 
-    private GatewayHelperProperties gatewayHelperProperties;
+    private GatewayProperties gatewayHelperProperties;
 
-    public GetUserDetailsServiceImpl(RestTemplate restTemplate, GatewayHelperProperties gatewayHelperProperties) {
+    public GetUserDetailsServiceImpl(RestTemplate restTemplate, GatewayProperties gatewayHelperProperties) {
         this.restTemplate = restTemplate;
         this.gatewayHelperProperties = gatewayHelperProperties;
     }

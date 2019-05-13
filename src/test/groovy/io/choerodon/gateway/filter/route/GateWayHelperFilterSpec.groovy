@@ -1,27 +1,19 @@
 package io.choerodon.gateway.filter.route
 
-import com.netflix.hystrix.exception.HystrixRuntimeException
 import io.choerodon.gateway.IntegrationTestConfiguration
-import io.choerodon.gateway.config.GatewayHelperProperties
+import io.choerodon.gateway.config.GatewayProperties
 import io.choerodon.gateway.domain.ResponseContext
-import io.choerodon.gateway.filter.route.GateWayHelperFilter
-import io.choerodon.gateway.helper.GatewayHelper
-import io.choerodon.gateway.my.MyClientHttpResponse
-import io.choerodon.gateway.my.MyRibbonCommand
+import io.choerodon.gateway.helper.AuthenticationHelper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.cloud.netflix.ribbon.support.RibbonRequestCustomizer
-import org.springframework.cloud.netflix.zuul.filters.route.RibbonCommand
-import org.springframework.cloud.netflix.zuul.filters.route.RibbonCommandFactory
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
 import spock.lang.Stepwise
 
 import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -36,7 +28,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 class GateWayHelperFilterSpec extends Specification {
 
     @Autowired
-    private GatewayHelperProperties gatewayHelperProperties
+    private GatewayProperties gatewayHelperProperties
 
     private List<RibbonRequestCustomizer> requestCustomizers = Mock(List)
 
@@ -49,7 +41,7 @@ class GateWayHelperFilterSpec extends Specification {
 
     def "DoFilter"() {
         given:
-        GatewayHelper gatewayHelper = Mock(GatewayHelper)
+        AuthenticationHelper gatewayHelper = Mock(AuthenticationHelper)
         GateWayHelperFilter gateWayHelperFilter = new GateWayHelperFilter(gatewayHelper)
 
         and:
