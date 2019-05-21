@@ -1,30 +1,30 @@
 package io.choerodon.gateway.config;
 
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
+import io.choerodon.gateway.helper.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletPath;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.config.client.MemoryRouteLocator;
 import org.springframework.cloud.config.client.RouterOperator;
-import org.springframework.cloud.netflix.ribbon.support.RibbonRequestCustomizer;
 import org.springframework.cloud.netflix.zuul.filters.RouteLocator;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
-import org.springframework.cloud.netflix.zuul.filters.route.RibbonCommandFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.jwt.crypto.sign.MacSigner;
+import org.springframework.security.jwt.crypto.sign.Signer;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import io.choerodon.gateway.filter.GateWayHelperFilter;
-import io.choerodon.gateway.filter.HeaderWrapperFilter;
+import io.choerodon.gateway.filter.route.GateWayHelperFilter;
+import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
 
 /**
  * 自定义configuration配置类
@@ -32,7 +32,7 @@ import io.choerodon.gateway.filter.HeaderWrapperFilter;
  * @author flyleft
  */
 @Configuration
-@EnableConfigurationProperties(GatewayHelperProperties.class)
+@EnableConfigurationProperties(GatewayProperties.class)
 public class CustomZuulConfig {
     @Value("${choerodon.gateway.allowed.origin:*}")
     private String allowedOrigin;
@@ -51,15 +51,11 @@ public class CustomZuulConfig {
     /**
      * 声明GateWayHelperFilter
      *
-     * @param ribbonCommandFactory ribbon创建工厂，GateWayHelperFilter使用ribbon转发请求
      * @return 配置的GateWayHelperFilter
      */
     @Bean
-    public GateWayHelperFilter gateWayHelperFilter(GatewayHelperProperties gatewayHelperProperties, RibbonCommandFactory<?> ribbonCommandFactory,
-                                                   Optional<List<RibbonRequestCustomizer>> requestCustomizers) {
-        return new GateWayHelperFilter(gatewayHelperProperties,
-                requestCustomizers.orElseGet(Collections::emptyList),
-                ribbonCommandFactory);
+    public GateWayHelperFilter gateWayHelperFilter(AuthenticationHelper gatewayHelper) {
+        return new GateWayHelperFilter(gatewayHelper);
     }
 
     /**
@@ -105,8 +101,19 @@ public class CustomZuulConfig {
     }
 
     @Bean
-    public HeaderWrapperFilter headerWrapperFilter(GatewayHelperProperties gatewayHelperProperties) {
+    public HeaderWrapperFilter headerWrapperFilter(GatewayProperties gatewayHelperProperties) {
         return new HeaderWrapperFilter(gatewayHelperProperties);
+    }
+
+    @Bean
+    public Signer jwtSigner(GatewayProperties gatewayHelperProperties) {
+        return new MacSigner(gatewayHelperProperties.getJwtKey());
+    }
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }

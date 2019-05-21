@@ -1,7 +1,7 @@
-package io.choerodon.gateway.filter
+package io.choerodon.gateway.filter.route
 
 import com.netflix.zuul.context.RequestContext
-import io.choerodon.gateway.config.GatewayHelperProperties
+import io.choerodon.gateway.config.GatewayProperties
 import org.junit.runner.RunWith
 import org.powermock.api.mockito.PowerMockito
 
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest
 @PowerMockRunnerDelegate(Sputnik.class)
 class HeaderWrapperFilterSpec extends Specification {
 
-    def gatewayHelperProperties = Mock(GatewayHelperProperties) {
+    def gatewayHelperProperties = Mock(GatewayProperties) {
         isEnabledJwtLog() >> true
     }
     def headerWrapperFilter = new HeaderWrapperFilter(gatewayHelperProperties)

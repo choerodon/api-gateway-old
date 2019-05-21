@@ -6,7 +6,18 @@ spring:
     stream:
       enabled: false
   autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+    exclude:
+      - org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - io.choerodon.mybatis.MybatisMapperAutoConfiguration
+  cache:
+    multi:
+      l1:
+        enabled: true
+        type: caffeine
+      l2:
+        enabled: true
+        type: redis
 hystrix:
   stream:
     queue:
@@ -14,8 +25,6 @@ hystrix:
 eureka:
   client:
     enabled: false
-management:
-  port: 0 #设置管理端口为随机端口
 choerodon:
   swagger:
     skip:

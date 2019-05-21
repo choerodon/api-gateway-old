@@ -5,20 +5,28 @@
     <parent>
         <groupId>io.choerodon</groupId>
         <artifactId>choerodon-framework-parent</artifactId>
-        <version>0.9.0.RELEASE</version>
+        <version>0.11.0.RELEASE</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api-gateway</artifactId>
 
     <properties>
-        <choerodon.starters.version>0.10.0.RELEASE</choerodon.starters.version>
+        <choerodon.starters.version>0.11.0.RELEASE</choerodon.starters.version>
         <powermock.version>1.7.4</powermock.version>
+        <choerodon.mainClass>io.choerodon.gateway.GatewayApplication</choerodon.mainClass>
+        <choerodon.serviceBuild>true</choerodon.serviceBuild>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.undertow</groupId>
+                    <artifactId>undertow-websockets-jsr</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -34,6 +42,17 @@
             <groupId>io.choerodon</groupId>
             <artifactId>choerodon-starter-core</artifactId>
             <version>${choerodon.starters.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.security.oauth</groupId>
+                    <artifactId>spring-security-oauth2</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.choerodon</groupId>
@@ -64,9 +83,47 @@
         <!-- 添加cpu监控 -->
         <dependency>
             <groupId>io.choerodon</groupId>
-            <artifactId>choerodon-starter-hitoa</artifactId>
+            <artifactId>choerodon-starter-metric</artifactId>
             <version>${choerodon.starters.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.choerodon</groupId>
+            <artifactId>choerodon-starter-mybatis-mapper</artifactId>
+            <version>${choerodon.starters.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-jwt</artifactId>
+            <version>1.0.10.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- cache -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>2.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+
+
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
@@ -139,41 +196,6 @@
     </dependencies>
     <build>
         <finalName>app</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.codehaus.gmavenplus</groupId>
-                <artifactId>gmavenplus-plugin</artifactId>
-                <version>1.5</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>addTestSources</goal>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18.1</version>
-                <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Spec.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

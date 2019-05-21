@@ -3,6 +3,33 @@ spring:
     multipart:
       max-file-size: 30MB
       max-request-size: 30MB
+  datasource:
+    url: jdbc:mysql://localhost/iam_service?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: choerodon
+    password: 123456
+  redis:
+    host: localhost
+    port: 6379
+    database: 4
+    lettuce:
+      shutdown-timeout: 200ms
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 2
+        max-wait: -1ms
+  cache:
+    multi:
+      l1:
+        enabled: true # 是否开启一级缓存
+        type: caffeine # 一级缓存实现。目前支持caffeine和guava
+      l2:
+        enabled: false # 是否开启二级缓存
+        type: redis # 二级缓存的实现
+      caches:
+        permission: # 请求对应的权限缓存
+          l1-spec: initialCapacity=50,maximumSize=500,expireAfterWrite=600s
+          l2-spec: expiration=600
 eureka:
   instance:
     preferIpAddress: true
@@ -65,6 +92,9 @@ zuul:
     foundation:
       path: /foundation/**
       serviceId: foundation-service
+    knowledge:
+      path: /knowledge/**
+      serviceId: knowledgebase-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
@@ -79,10 +109,26 @@ choerodon:
   gateway:
     allowed:
       origin: '*'
-    helper:
-      service-id: gateway-helper
-      enabled: true
-      enabled-jwt-log: false
+    enabled: true
+    enabled-jwt-log: false
+    jwt-key: choerodon # jwt的密钥
+    oauth-info-uri: http://oauth-server/oauth/api/user # oauth获取userDetail地址
+    permission:
+      enabled: true # 是否开启权限校验
+      # 跳过权限校验路径,本地开发使用swagger需要跳过这些链接/manager/swagger-ui.html,/manager/webjars/**,/manager/swagger-resources/**
+      skip-paths: /**/skip/**, /oauth/**,/prometheus,/health,/env,/metrics,/favicon.ico
+      cache-seconds: 600 # 请求地址和对应的权限缓存时间
+      cache-size: 3000  # 请求地址和对应的权限缓存大小
+security:
+  oauth2:
+    client:
+      grant-type: client_credentials
+    resource:
+      userInfoUri: http://oauth-server/oauth/api/user
+mybatis:
+  mapperLocations: classpath*:/mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
 ribbon:
   ReadTimeout: 20000
   ConnectTimeout: 20000
@@ -90,3 +136,6 @@ ribbon:
     enabled: false
   okhttp:
     enabled: true
+logging:
+  level:
+    com.netflix.discovery.DiscoveryClient: warn

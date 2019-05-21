@@ -1,8 +1,9 @@
-package io.choerodon.gateway.filter
+package io.choerodon.gateway.filter.route
 
 import com.netflix.zuul.context.RequestContext
 import com.netflix.zuul.exception.ZuulException
 import com.netflix.zuul.monitoring.CounterFactory
+import io.choerodon.gateway.filter.route.CustomErrorZuulFilter
 import org.junit.runner.RunWith
 import org.powermock.api.mockito.PowerMockito
 import org.powermock.core.classloader.annotations.PrepareForTest
