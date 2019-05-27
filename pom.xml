@@ -10,6 +10,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>api-gateway</artifactId>
+    <version>0.17.0.RELEASE</version>
 
     <properties>
         <choerodon.starters.version>0.11.0.RELEASE</choerodon.starters.version>
@@ -111,10 +112,6 @@
             <groupId>com.github.ben-manes.caffeine</groupId>
             <artifactId>caffeine</artifactId>
             <version>2.6.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
