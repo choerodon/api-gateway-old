@@ -95,6 +95,9 @@ zuul:
     knowledge:
       path: /knowledge/**
       serviceId: knowledgebase-service
+    sms:
+      path: /sms/**
+      serviceId: sms-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie

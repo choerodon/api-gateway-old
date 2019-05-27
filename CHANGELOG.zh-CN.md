@@ -2,7 +2,18 @@
 
 这个项目的所有显著变化都将被记录在这个文件中。
 
-## [0.15.0] - 2019-04-19
+
+## [0.17.0] -2019-05-24
+
+### 新增
+- gateway-helper合并到api-gateway
+- 添加filter流程图
+- 添加knowledge-service和sms-service路由
+
+### 修改
+- 请求header同时加入Jwt_Token和Authorization，支持平滑升级
+
+## [0.16.0] - 2019-04-19
 
 ### 更新
 
