@@ -98,6 +98,9 @@ zuul:
     sms:
       path: /sms/**
       serviceId: sms-service
+    low-code:
+      path: /lc/**
+      serviceId: low-code-service
   semaphore:
     max-semaphores: 300
   sensitiveHeaders: Cookie,Set-Cookie
