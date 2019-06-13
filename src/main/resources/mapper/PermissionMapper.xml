@@ -12,7 +12,7 @@
     <select id="selectPermissionByMethodAndService"
             resultMap="Permission">
         SELECT
-        id,path,method,is_public_access,is_login_access,is_within AS within,resource_level
+        id,code,path,method,is_public_access,is_login_access,is_within AS within,resource_level
         FROM
         iam_permission
         WHERE
@@ -35,4 +35,19 @@
         SELECT is_enabled FROM fd_organization WHERE id = #{sourceId}
     </select>
 
+    <select id="selectMenuCodeByPermissionCode" resultType="java.lang.String">
+        SELECT
+            CODE
+        FROM
+            iam_menu_b
+        WHERE
+            CODE IN (
+                SELECT
+                    menu_code
+                FROM
+                    iam_menu_permission
+                WHERE
+                    permission_code = #{permissionCode}
+            )
+    </select>
 </mapper>

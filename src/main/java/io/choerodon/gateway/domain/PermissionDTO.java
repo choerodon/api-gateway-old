@@ -21,6 +21,8 @@ public class PermissionDTO extends AuditDomain implements Serializable {
     @GeneratedValue
     private Long id;
 
+    private String code;
+
     private String path;
 
     private String method;
@@ -43,7 +45,8 @@ public class PermissionDTO extends AuditDomain implements Serializable {
         this.path = path;
     }
 
-    public PermissionDTO(String path, String method, Boolean publicAccess, Boolean loginAccess, Boolean within, String resourceLevel) {
+    public PermissionDTO(String code, String path, String method, Boolean publicAccess, Boolean loginAccess, Boolean within, String resourceLevel) {
+        this.code = code;
         this.path = path;
         this.method = method;
         this.publicAccess = publicAccess;
@@ -108,10 +111,19 @@ public class PermissionDTO extends AuditDomain implements Serializable {
         this.resourceLevel = resourceLevel;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     @Override
     public String toString() {
         return "PermissionDTO{" +
                 "id=" + id +
+                ", code='" + code + '\'' +
                 ", path='" + path + '\'' +
                 ", method='" + method + '\'' +
                 ", publicAccess=" + publicAccess +

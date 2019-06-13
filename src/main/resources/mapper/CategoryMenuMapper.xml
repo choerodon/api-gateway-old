@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.choerodon.gateway.mapper.CategoryMenuMapper">
+
+    <select id="selectByMenuCodeList"
+            resultType="io.choerodon.gateway.domain.CategoryMenuDTO">
+        SELECT
+            *
+        FROM
+            FD_CATEGORY_MENU
+        WHERE
+            1 = 1
+        <if test="level != null">
+            AND RESOURCE_LEVEL = #{level}
+        </if>
+        <if test="menuCodeList != null and !menuCodeList.isEmpty()">
+            AND MENU_CODE IN
+            <foreach collection="menuCodeList" item="menuCode" index="index" open="(" separator="," close=")">
+                #{menuCode}
+            </foreach>
+        </if>
+        <if test="categories != null and !categories.isEmpty()">
+            AND CATEGORY_CODE IN
+            <foreach collection="categories" item="category" index="index" open="(" separator="," close=")">
+                #{category}
+            </foreach>
+        </if>
+    </select>
+</mapper>

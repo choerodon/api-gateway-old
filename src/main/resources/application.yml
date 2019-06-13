@@ -109,6 +109,8 @@ hystrix:
           thread:
             timeoutInMilliseconds: 80000
 choerodon:
+  category:
+    enabled: false   # 是否开启项目/组织类别权限校验
   gateway:
     allowed:
       origin: '*'
