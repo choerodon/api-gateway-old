@@ -25,4 +25,6 @@ public interface PermissionMapper extends BaseMapper<PermissionDTO> {
     Boolean projectEnabled(@Param("sourceId") Long sourceId);
 
     Boolean organizationEnabled(@Param("sourceId") Long sourceId);
+
+    List<String> selectMenuCodeByPermissionCode(@Param("permissionCode") String permissionCode);
 }
