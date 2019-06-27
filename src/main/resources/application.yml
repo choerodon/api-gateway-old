@@ -1,10 +1,10 @@
 spring:
   servlet:
     multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+      max-file-size: 30MB # 单个文件最大上传大小
+      max-request-size: 30MB # 总上传文件最大上传大小
   datasource:
-    url: jdbc:mysql://localhost/iam_service?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost/iam_service?useUnicode=true&characterEncoding=utf-8&useSSL=false&useInformationSchema=true&remarks=true
     username: choerodon
     password: 123456
   redis:
@@ -12,17 +12,13 @@ spring:
     port: 6379
     database: 4
     lettuce:
-      shutdown-timeout: 200ms
+      shutdown-timeout: 200ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
       pool:
-        max-active: 8
-        max-idle: 8
-        min-idle: 2
-        max-wait: -1ms
+        max-active: 8 # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-idle: 8 # 连接池中的最大空闲连接 默认 8
+        min-idle: 2 # 连接池中的最小空闲连接 默认 0
+        max-wait: -1ms # 等待可用连接的最大时间，负数不限制
   cache:
-    multi:
-      l1:
-        enabled: true # 是否开启一级缓存
-        type: caffeine # 一级缓存实现。目前支持caffeine和guava
       l2:
         enabled: false # 是否开启二级缓存
         type: redis # 二级缓存的实现

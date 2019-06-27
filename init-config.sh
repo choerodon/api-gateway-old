@@ -10,7 +10,7 @@ mvn org.apache.maven.plugins:maven-dependency-plugin:get \
 
 mvn clean install
 
-java -Dspring.datasource.url="jdbc:mysql://localhost/manager_service?useUnicode=true&characterEncoding=utf-8&useSSL=false" \
+java -Dspring.datasource.url="jdbc:mysql://localhost/manager_service?useUnicode=true&characterEncoding=utf-8&useSSL=false&useInformationSchema=true&remarks=true" \
  -Dspring.datasource.username=root \
  -Dspring.datasource.password=root \
  -Dconfig.type=db \
