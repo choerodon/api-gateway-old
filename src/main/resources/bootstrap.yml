@@ -4,14 +4,14 @@ spring:
   application:
     name: api-gateway
   cloud:
-      config:
-        failFast: true
-        uri: http://localhost:8010
-        enabled: false
-        retry:
-          maxAttempts: 6
-          multiplier: 1.1
-          maxInterval: 2000
+    config:
+      failFast: true
+      uri: http://localhost:8010
+      enabled: false
+      retry:
+        maxAttempts: 6
+        multiplier: 1.1
+        maxInterval: 2000
 management:
   server:
     port: 8081
@@ -19,3 +19,5 @@ management:
     web:
       exposure:
         include: '*'
+    health:
+      show-details: "ALWAYS"
