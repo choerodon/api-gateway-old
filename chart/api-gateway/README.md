@@ -83,6 +83,7 @@ env.open.SPRING_CLOUD_CONFIG_URI | 配置中心地址
 env.open.SPRING_DATASOURCE_URL | 数据库连接地址
 env.open.SPRING_DATASOURCE_USERNAME | 数据库用户名
 env.open.SPRING_DATASOURCE_PASSWORD | 数据库密码
+env.open.SPRING_CACHE_MULTI_L1_ENABLED | 是否开启一级缓存
 env.open.SPRING_CACHE_MULTI_L2_ENABLED | 是否开启二级缓存
 env.open.SPRING_REDIS_HOST | redis主机地址
 env.open.SPRING_REDIS_PORT | redis端口

@@ -47,8 +47,10 @@ env:
     SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1/iam_service?useUnicode=true&characterEncoding=utf-8&useSSL=false&useInformationSchema=true&remarks=true
     # 数据库用户名
     SPRING_DATASOURCE_USERNAME: username
-    #  数据库密码
+    # 数据库密码
     SPRING_DATASOURCE_PASSWORD: password
+    # 是否开启一级缓存
+    SPRING_CACHE_MULTI_L1_ENABLED: false
     # 是否开启二级缓存
     SPRING_CACHE_MULTI_L2_ENABLED: false
     # redis主机地址

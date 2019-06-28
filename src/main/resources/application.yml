@@ -19,6 +19,10 @@ spring:
         min-idle: 2 # 连接池中的最小空闲连接 默认 0
         max-wait: -1ms # 等待可用连接的最大时间，负数不限制
   cache:
+    multi:
+      l1:
+        enabled: true # 是否开启一级缓存
+        type: caffeine # 一级缓存实现。目前支持caffeine和guava
       l2:
         enabled: false # 是否开启二级缓存
         type: redis # 二级缓存的实现
