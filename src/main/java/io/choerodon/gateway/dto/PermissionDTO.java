@@ -1,24 +1,17 @@
-package io.choerodon.gateway.domain;
+package io.choerodon.gateway.dto;
 
-import io.choerodon.mybatis.annotation.ModifyAudit;
-import io.choerodon.mybatis.annotation.VersionAudit;
-import io.choerodon.mybatis.domain.AuditDomain;
+import io.choerodon.mybatis.entity.BaseDTO;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-@ModifyAudit
-@VersionAudit
 @Table(name = "iam_permission")
-public class PermissionDTO extends AuditDomain implements Serializable {
+public class PermissionDTO extends BaseDTO implements Serializable {
 
     private static final long serialVersionUID = -4108102602163313984L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String code;

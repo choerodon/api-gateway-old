@@ -1,6 +1,6 @@
 package io.choerodon.gateway.service
 
-import io.choerodon.gateway.domain.PermissionDTO
+import io.choerodon.gateway.dto.PermissionDTO
 import io.choerodon.gateway.mapper.PermissionMapper
 import io.choerodon.gateway.service.impl.PermissionServiceImpl
 import spock.lang.Specification

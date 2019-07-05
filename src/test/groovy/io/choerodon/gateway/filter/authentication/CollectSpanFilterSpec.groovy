@@ -2,7 +2,7 @@ package io.choerodon.gateway.filter.authentication
 
 import io.choerodon.gateway.domain.CheckRequest
 import io.choerodon.gateway.domain.CheckResponse
-import io.choerodon.gateway.domain.PermissionDTO
+import io.choerodon.gateway.dto.PermissionDTO
 import io.choerodon.gateway.domain.RequestContext
 import org.springframework.cloud.config.client.ZuulRoute
 import org.springframework.data.redis.core.StringRedisTemplate

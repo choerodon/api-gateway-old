@@ -1,6 +1,7 @@
 package io.choerodon.gateway.domain;
 
 import io.choerodon.core.oauth.CustomUserDetails;
+import io.choerodon.gateway.dto.PermissionDTO;
 import org.springframework.cloud.config.client.ZuulRoute;
 
 public class RequestContext {

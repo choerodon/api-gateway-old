@@ -1,7 +1,7 @@
 package io.choerodon.gateway.mapper;
 
-import io.choerodon.gateway.domain.ProjectDTO;
-import io.choerodon.mybatis.common.BaseMapper;
+import io.choerodon.gateway.dto.ProjectDTO;
+import io.choerodon.mybatis.common.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Eugen
  */
-public interface ProjectMapper extends BaseMapper<ProjectDTO> {
+public interface ProjectMapper extends Mapper<ProjectDTO> {
     /**
      * 根据项目ID获取项目类别
      *

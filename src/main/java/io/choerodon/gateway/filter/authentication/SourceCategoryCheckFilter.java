@@ -1,9 +1,9 @@
 package io.choerodon.gateway.filter.authentication;
 
 import io.choerodon.core.iam.ResourceLevel;
-import io.choerodon.gateway.domain.CategoryMenuDTO;
+import io.choerodon.gateway.dto.CategoryMenuDTO;
 import io.choerodon.gateway.domain.CheckState;
-import io.choerodon.gateway.domain.PermissionDTO;
+import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
 import io.choerodon.gateway.mapper.CategoryMenuMapper;
 import io.choerodon.gateway.mapper.OrganizationMapper;
