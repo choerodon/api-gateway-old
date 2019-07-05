@@ -5,12 +5,12 @@ import io.choerodon.gateway.domain.CheckState;
 import io.choerodon.gateway.domain.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
 import io.choerodon.gateway.mapper.PermissionMapper;
+import io.choerodon.gateway.util.SourceUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 普通接口(除公共接口，loginAccess接口，内部接口以外的接口)
@@ -81,7 +81,7 @@ public class CommonRequestCheckFilter implements HelperFilter {
     private void checkProjectPermission(final RequestContext context,
                                         final List<Long> sourceIds,
                                         final String matchPath) {
-        Long projectId = parseProjectOrOrgIdFromUri(context.getTrueUri(), matchPath, PROJECT_PATH_ID);
+        Long projectId = SourceUtil.getSourceId(context.getTrueUri(), matchPath, PROJECT_PATH_ID, matcher);
         if (projectId == null) {
             context.response.setStatus(CheckState.API_ERROR_PROJECT_ID);
             context.response.setMessage("Project interface must have 'project_id' in path");
@@ -103,7 +103,7 @@ public class CommonRequestCheckFilter implements HelperFilter {
     private void checkOrgPermission(final RequestContext context,
                                     final List<Long> sourceIds,
                                     final String matchPath) {
-        Long orgId = parseProjectOrOrgIdFromUri(context.getTrueUri(), matchPath, ORG_PATH_ID);
+        Long orgId = SourceUtil.getSourceId(context.getTrueUri(), matchPath, ORG_PATH_ID, matcher);
         if (orgId == null) {
             context.response.setStatus(CheckState.API_ERROR_ORG_ID);
             context.response.setMessage("Organization interface must have 'organization_id' in path");
@@ -120,18 +120,6 @@ public class CommonRequestCheckFilter implements HelperFilter {
                 context.response.setMessage("No access to this this organization, organizationId: " + orgId);
             }
         }
-    }
-
-    private Long parseProjectOrOrgIdFromUri(final String uri, final String matchPath, String id) {
-        Map<String, String> map = matcher.extractUriTemplateVariables(matchPath, uri);
-        if (map.size() < 1) {
-            return null;
-        }
-        String value = map.get(id);
-        if (value != null) {
-            return Long.parseLong(value);
-        }
-        return null;
     }
 
 }
