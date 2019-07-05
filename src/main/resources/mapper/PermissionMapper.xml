@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="io.choerodon.gateway.mapper.PermissionMapper">
 
-    <resultMap id="Permission" type="io.choerodon.gateway.domain.PermissionDTO">
+    <resultMap id="Permission" type="io.choerodon.gateway.dto.PermissionDTO">
         <id column="id" property="id"></id>
         <result property="within" column="is_within" jdbcType="BOOLEAN"/>
         <result property="loginAccess" column="is_login_access" jdbcType="BOOLEAN"/>

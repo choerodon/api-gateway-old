@@ -4,7 +4,7 @@ import io.choerodon.core.iam.ResourceLevel
 import io.choerodon.core.oauth.CustomUserDetails
 import io.choerodon.gateway.domain.CheckResponse
 import io.choerodon.gateway.domain.CheckState
-import io.choerodon.gateway.domain.PermissionDTO
+import io.choerodon.gateway.dto.PermissionDTO
 import io.choerodon.gateway.domain.RequestContext
 import io.choerodon.gateway.mapper.PermissionMapper
 import spock.lang.Specification

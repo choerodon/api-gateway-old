@@ -1,6 +1,6 @@
 package io.choerodon.gateway.service.impl;
 
-import io.choerodon.gateway.domain.PermissionDTO;
+import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.mapper.PermissionMapper;
 import io.choerodon.gateway.service.PermissionService;
 import org.slf4j.Logger;

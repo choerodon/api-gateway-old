@@ -1,7 +1,7 @@
 package io.choerodon.gateway.mapper;
 
-import io.choerodon.gateway.domain.OrganizationDTO;
-import io.choerodon.mybatis.common.BaseMapper;
+import io.choerodon.gateway.dto.OrganizationDTO;
+import io.choerodon.mybatis.common.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
  *
  * @author Eugen
  */
-public interface OrganizationMapper extends BaseMapper<OrganizationDTO> {
+public interface OrganizationMapper extends Mapper<OrganizationDTO> {
     /**
      * 根据组织ID获取组织类别
      *

@@ -1,6 +1,6 @@
 package io.choerodon.gateway.filter.authentication;
 
-import io.choerodon.gateway.domain.PermissionDTO;
+import io.choerodon.gateway.dto.PermissionDTO;
 import io.choerodon.gateway.domain.RequestContext;
 import io.choerodon.gateway.domain.TranceSpan;
 import org.springframework.cloud.config.client.ZuulRoute;
