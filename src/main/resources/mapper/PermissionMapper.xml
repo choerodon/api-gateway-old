@@ -12,7 +12,7 @@
     <select id="selectPermissionByMethodAndService"
             resultMap="Permission">
         SELECT
-        id,code,path,method,is_public_access,is_login_access,is_within AS within,resource_level
+        id,code,path,method,is_public_access,is_login_access,is_within,resource_level
         FROM
         iam_permission
         WHERE
