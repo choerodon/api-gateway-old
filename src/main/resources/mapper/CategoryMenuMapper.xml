@@ -3,7 +3,7 @@
 <mapper namespace="io.choerodon.gateway.mapper.CategoryMenuMapper">
 
     <select id="selectByMenuCodeList"
-            resultType="io.choerodon.gateway.domain.CategoryMenuDTO">
+            resultType="io.choerodon.gateway.dto.CategoryMenuDTO">
         SELECT
             *
         FROM

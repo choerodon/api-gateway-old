@@ -35,8 +35,11 @@ import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
 @Configuration
 @EnableConfigurationProperties(GatewayProperties.class)
 public class CustomZuulConfig {
-    @Value("#{T(java.util.Arrays).asList('${choerodon.gateway.allowed.origin:*}')}")
     private List<String> allowedOrigins;
+
+    public CustomZuulConfig(@Value("#{T(java.util.Arrays).asList('${choerodon.gateway.allowed.origin:*}')}") List<String> allowedOrigins) {
+        this.allowedOrigins = allowedOrigins;
+    }
 
     @Bean
     public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties, DispatcherServletPath dispatcherServletPath) {

@@ -55,7 +55,6 @@ public class HeaderWrapperFilter extends ZuulFilter {
             LOGGER.info("Request get empty jwt , request uri: {} method: {}", request.getRequestURI(), request.getMethod());
         } else {
             ctx.addZuulRequestHeader(HEADER_TOKEN, token);
-            ctx.addZuulRequestHeader(HEADER_JWT, token);
             if (gatewayHelperProperties.isEnabledJwtLog()) {
                 LOGGER.info("Request get jwt , request uri: {} method: {} JWT: {}",
                         request.getRequestURI(), request.getMethod(), token);

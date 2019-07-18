@@ -1,8 +1,6 @@
-package io.choerodon.gateway.domain;
+package io.choerodon.gateway.dto;
 
-import io.choerodon.mybatis.annotation.ModifyAudit;
-import io.choerodon.mybatis.annotation.VersionAudit;
-import io.choerodon.mybatis.domain.AuditDomain;
+import io.choerodon.mybatis.entity.BaseDTO;
 
 import javax.persistence.*;
 
@@ -10,10 +8,8 @@ import javax.persistence.*;
 /**
  * @author wuguokai
  */
-@ModifyAudit
-@VersionAudit
 @Table(name = "fd_project")
-public class ProjectDTO extends AuditDomain {
+public class ProjectDTO extends BaseDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
