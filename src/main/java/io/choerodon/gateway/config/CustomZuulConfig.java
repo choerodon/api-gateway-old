@@ -1,6 +1,7 @@
 package io.choerodon.gateway.config;
 
 import java.util.Arrays;
+import java.util.List;
 
 import io.choerodon.gateway.helper.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,8 +35,8 @@ import io.choerodon.gateway.filter.route.HeaderWrapperFilter;
 @Configuration
 @EnableConfigurationProperties(GatewayProperties.class)
 public class CustomZuulConfig {
-    @Value("${choerodon.gateway.allowed.origin:*}")
-    private String allowedOrigin;
+    @Value("#{T(java.util.Arrays).asList('${choerodon.gateway.allowed.origin:*}')}")
+    private List<String> allowedOrigins;
 
     @Bean
     public RouteLocator memoryRouterOperator(ServerProperties server, ZuulProperties zuulProperties, DispatcherServletPath dispatcherServletPath) {
@@ -65,8 +66,8 @@ public class CustomZuulConfig {
      * @return filter的声明
      */
     @Bean
-    public FilterRegistrationBean gatewayHelperFilterRegistrationBean(GateWayHelperFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<GateWayHelperFilter> gatewayHelperFilterRegistrationBean(GateWayHelperFilter filter) {
+        FilterRegistrationBean<GateWayHelperFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(filter);
         registration.addUrlPatterns("/*");
         registration.setName("gateWayHelperFilter");
@@ -84,7 +85,7 @@ public class CustomZuulConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin(allowedOrigin);
+        config.setAllowedOrigins(allowedOrigins);
         config.addAllowedHeader("*");
         config.setMaxAge(18000L);
         config.addAllowedMethod("*");
@@ -95,7 +96,7 @@ public class CustomZuulConfig {
         config.setExposedHeaders(Arrays.asList(responseHeader));
         source.registerCorsConfiguration("/**", config);
 
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+        FilterRegistrationBean bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(0);
         return bean;
     }
